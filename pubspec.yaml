@@ -1,5 +1,5 @@
 name: morad_tk_app
-description: "MORAD_TK Smart Relay Mobile App"
+description: "MORAD_TK Smart Relay Control App"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -9,7 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.0
+  firebase_core: ^3.1.0
+  firebase_database: ^11.0.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
