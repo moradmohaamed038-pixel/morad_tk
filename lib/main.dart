@@ -1,4 +1,4 @@
-Import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -171,11 +171,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String siteName = "مزرعة رقم 1";
   List<bool> relays = List.generate(12, (index) => false);
   
-  // تخصيص أسماء وألوان المؤشات للـ 12 ريلاي
   List<String> relayNames = List.generate(12, (index) => "Relay ${index + 1}");
-  List<int> relayTimers = List.generate(12, (index) => 0); // المؤقتات بالثواني
+  List<int> relayTimers = List.generate(12, (index) => 0);
 
-  bool isCloudOnline = false; // فحص حقيقي لحالة السحابة
+  bool isCloudOnline = false;
 
   @override
   void initState() {
@@ -184,7 +183,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _checkCloudStatus();
   }
 
-  // فحص حقيقي متصل مع Firestore لمعرفة هل اللوحة متصلة بالسحابة
   void _checkCloudStatus() {
     FirebaseFirestore.instance
         .collection('devices')
@@ -193,10 +191,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         .listen((snapshot) {
       if (snapshot.exists) {
         var data = snapshot.data();
-        if (data != ['last_seen'] != null) {
-          Timestamp lastSeen = data!['last_seen'];
+        if (data != null && data['last_seen'] != null) {
+          Timestamp lastSeen = data['last_seen'];
           DateTime lastSeenDate = lastSeen.toDate();
-          // إذا آخر اتصال حدث خلال آخر دقيقتين، تعتبر اللوحة متصلة أونلاين بالسحابة
           bool online = DateTime.now().difference(lastSeenDate).inMinutes < 2;
           setState(() {
             isCloudOnline = online;
@@ -220,7 +217,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         });
       });
     } catch (e) {
-      // الاتصال المحلي مفصول، يعتمد على السحابة
+      // الاتصال المحلي مفصول
     }
   }
 
@@ -231,7 +228,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _channel.sink.add(jsonEncode({"relay": index + 1, "state": value ? 1 : 0}));
   }
 
-  // نافذة إعدادات تسمية السويتش وضبط المؤقت
   void _showRelaySettingsDialog(int index) {
     final TextEditingController nameController = TextEditingController(text: relayNames[index]);
     final TextEditingController timerController = TextEditingController(text: relayTimers[index].toString());
@@ -325,7 +321,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: ListView(
         padding: const EdgeInsets.all(12.0),
         children: [
-          // بطاقة مستوى الخزان
           Card(
             color: const Color(0xFF1E1E1E),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -375,7 +370,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 15),
 
-          // قسم المؤشرات
           const Text("المؤشرات وحالة النظام (Indicators & Alarms)", style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           Container(
@@ -397,7 +391,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 15),
 
-          // حقول الإدخال السحابية
           const Text("حقول الإدخال السحابية (Cloud Inputs)", style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
           TextField(
@@ -412,7 +405,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 20),
 
-          // التحكم بالمخارج 12 Relay مع تخصيص الأسماء والمؤقتات
           const Text("التحكم بالمخارج (12-Relay Cloud Control)", style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           GridView.builder(
