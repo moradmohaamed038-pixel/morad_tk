@@ -41,6 +41,15 @@ dependencies:
   shared_preferences: ^2.5.5
 
 dev_dependencies:
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # مكاتب Firebase المطلوبة
+  firebase_core: ^3.0.0
+  firebase_database: ^11.0.0
+  http: ^1.2.0
+
   flutter_test:
     sdk: flutter
 
