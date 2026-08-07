@@ -39,11 +39,31 @@ dependencies:
   cloud_firestore: ^6.7.1
   web_socket_channel: ^3.0.3
   shared_preferences: ^2.5.5
+name: morad_tk_app
+description: "MORAD_TK Smart Relay Mobile App"
+publish_to: 'none'
+version: 1.0.0+1
 
-dev_dependencies:
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
 dependencies:
   flutter:
     sdk: flutter
+
+  # مكاتب الاتصال والسحابة
+  firebase_core: any
+  firebase_database: any
+  http: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
   
   # مكاتب Firebase المطلوبة
   firebase_core: ^3.0.0
