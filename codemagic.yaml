@@ -1,0 +1,14 @@
+workflows:
+  default-workflow:
+    name: Default Workflow
+    environment:
+      flutter: stable
+      groups:
+        - credentials
+    scripts:
+      - name: Get flutter packages
+        script: flutter packages get
+      - name: Build APK
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/*.apk
